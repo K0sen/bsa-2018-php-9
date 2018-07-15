@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Currency;
 use App\Http\Requests\ValidatedCurrencyRequest;
 use App\Services\CurrencyRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
 
 class CurrencyController extends Controller
 {
@@ -38,6 +40,10 @@ class CurrencyController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create')) {
+            return redirect()->route('home');
+        }
+
         return view('currency.currency-create');
     }
 
@@ -49,38 +55,36 @@ class CurrencyController extends Controller
      */
     public function store(ValidatedCurrencyRequest $request)
     {
+        if (Gate::denies('create')) {
+            return redirect()->route('home');
+        }
+
         $this->currencyRepository->create($request);
 
-        return redirect(route('currencies.index'));
+        return redirect()->route('currency-list');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Currency $currency
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Currency $currency)
     {
-        $currency = $this->currencyRepository->findById($id);
-        if (!$currency) {
-            abort(404);
-        }
-
         return view('currency.currency', compact('currency'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Currency $currency
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Currency $currency)
     {
-        $currency = $this->currencyRepository->findById($id);
-        if (!$currency) {
-            abort(404);
+        if (Gate::denies('update', $currency)) {
+            return redirect()->route('home');
         }
 
         return view('currency.currency-update', compact('currency'));
@@ -89,15 +93,14 @@ class CurrencyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  ValidatedCurrencyRequest  $request
+     * @param  Currency $currency
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidatedCurrencyRequest $request, $id)
+    public function update(ValidatedCurrencyRequest $request, Currency $currency)
     {
-        $currency = $this->currencyRepository->findById($id);
-        if (!$currency) {
-            abort(404);
+        if (Gate::denies('update', $currency)) {
+            return redirect()->route('home');
         }
 
         $updatedCurrency = $this->currencyRepository->update($request, $currency);
@@ -108,12 +111,16 @@ class CurrencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Currency $currency
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Currency $currency)
     {
-        $this->currencyRepository->delete($id);
+        if (Gate::denies('delete', $currency)) {
+            return redirect('/');
+        }
+
+        $this->currencyRepository->delete($currency);
 
         return redirect('currencies');
     }

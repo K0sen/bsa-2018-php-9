@@ -5,7 +5,9 @@
         <th scope="col">Name</th>
         <th scope="col">Short Name</th>
         <th scope="col">Price ($)</th>
-        <th scope="col">Actions</th>
+        @can ('edit' or 'update')
+        <th scope="col">Edit/Update</th>
+        @endcan
     </tr>
     </thead>
     <tbody>

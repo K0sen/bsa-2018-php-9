@@ -10,7 +10,7 @@ interface CurrencyRepositoryInterface
 {
     public function findAll(): Collection;
 
-    public function delete(int $id): void;
+    public function delete(Currency $currency): void;
 
     public function findById($id): ?Currency;
 

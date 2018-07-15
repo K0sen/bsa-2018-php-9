@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Currency;
+use App\Policies\CurrencyPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        Currency::class => CurrencyPolicy::class,
     ];
 
     /**
@@ -25,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('delete', CurrencyPolicy::class . '@delete');
+        Gate::define('create', CurrencyPolicy::class . '@create');
+        Gate::define('update', CurrencyPolicy::class . '@update');
     }
 }

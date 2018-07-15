@@ -19,7 +19,7 @@ class CurrencyPolicy
      */
     public function view(User $user, Currency $currency)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class CurrencyPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -42,7 +42,7 @@ class CurrencyPolicy
      */
     public function update(User $user, Currency $currency)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -54,6 +54,6 @@ class CurrencyPolicy
      */
     public function delete(User $user, Currency $currency)
     {
-        //
+        return $user->is_admin;
     }
 }

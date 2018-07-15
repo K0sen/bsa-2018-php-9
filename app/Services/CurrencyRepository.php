@@ -26,14 +26,12 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param int $id
+     * @param Currency $currency
      * @throws \Exception
      */
-    public function delete(int $id): void
+    public function delete(Currency $currency): void
     {
-        if ($currency = $this->findById($id)) {
-            $currency->delete();
-        }
+        $currency->delete();
     }
 
     /**

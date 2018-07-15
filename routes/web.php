@@ -20,7 +20,7 @@ Route::resource('currencies', 'CurrencyController', [
     ]
 ]);
 Auth::routes();
-Route::get('/', 'MainController@index')->name('main');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('login/github', 'Auth\GithubLoginController@redirectToProvider')->name('github_login');
 Route::get('login/github/callback', 'Auth\GithubLoginController@handleProviderCallback')->name('github_callback');
