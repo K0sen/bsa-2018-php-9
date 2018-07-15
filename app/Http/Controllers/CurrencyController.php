@@ -78,12 +78,13 @@ class CurrencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Currency $currency
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Currency $currency)
+    public function edit($id)
     {
-        if (Gate::denies('update', $currency)) {
+        $currency = $this->currencyRepository->findById($id);
+        if ($currency === null || Gate::denies('update', $currency)) {
             return redirect()->route('home');
         }
 

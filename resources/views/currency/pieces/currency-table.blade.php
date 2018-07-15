@@ -5,7 +5,7 @@
         <th scope="col">Name</th>
         <th scope="col">Short Name</th>
         <th scope="col">Price ($)</th>
-        @can ('edit' or 'update')
+        @can (['delete', 'update'], $currencies[0])
         <th scope="col">Edit/Update</th>
         @endcan
     </tr>
