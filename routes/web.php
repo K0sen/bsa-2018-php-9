@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('currencies', 'CurrencyController');
-
+Route::resource('currencies', 'CurrencyController', [
+    'names' => [
+        'index' => 'currency-list',
+    ]
+]);
 Auth::routes();
-
 Route::get('/', 'MainController@index')->name('main');
+
+Route::get('login/github', 'Auth\GithubLoginController@redirectToProvider')->name('github_login');
+Route::get('login/github/callback', 'Auth\GithubLoginController@handleProviderCallback')->name('github_callback');

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 <div class="container">
@@ -59,6 +59,9 @@
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
+                                </a>
+                                <a href="{{ route('github_login') }}" class="float-right" title="Login via github">
+                                    <i class="fab fa-github fa-3x"></i>
                                 </a>
                             </div>
                         </div>
