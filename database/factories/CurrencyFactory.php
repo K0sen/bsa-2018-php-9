@@ -13,12 +13,11 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Currency::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'is_admin' => false,
-        'remember_token' => str_random(10),
+        'title' => $faker->name,
+        'short_name' => $faker->currencyCode,
+        'logo_url' => 'https://s2.coinmarketcap.com/static/img/coins/32x32/871.png',
+        'price' => $faker->randomFloat(2, 0.1, 7000),
     ];
 });

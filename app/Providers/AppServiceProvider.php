@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\CurrencyRepository;
+use App\Services\CurrencyRepositoryInterface;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::resourceVerbs(['create' => 'add']);
     }
 
     /**
@@ -23,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(CurrencyRepositoryInterface::class, CurrencyRepository::class);
     }
 }

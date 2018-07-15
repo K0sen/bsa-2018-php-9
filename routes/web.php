@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('currencies', 'CurrencyController');
+
+Auth::routes();
+
+Route::get('/', 'MainController@index')->name('main');
